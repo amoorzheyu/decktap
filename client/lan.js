@@ -15,8 +15,9 @@ const port = 9999;
 const isPkg = typeof process.pkg !== 'undefined';
 const staticPath = isPkg
   ? path.join(path.dirname(process.execPath), 'controller', 'public')
-  : __dirname + '/../controller/public';
+  : path.join(__dirname, '..', 'controller', 'public');
 
+console.log('📂 Static files path:', staticPath);
 app.use(express.static(staticPath));
 
 wss.on('connection', (ws) => {
@@ -88,30 +89,61 @@ function getLocalIP() {
           ipAddresses.push({
             name,
             address: config.address,
-            netmask: config.netmask
+            netmask: config.netmask,
+            // 添加优先级分数
+            priority: getPriorityScore(config.address, name)
           });
         }
       }
     }
   }
 
-  // 优先选择 172. 或 192.168 开头的地址（通常是热点或本地网络）
-  const localIP = ipAddresses.find(ip => 
-    ip.address.startsWith('172.') || 
-    ip.address.startsWith('192.168.')
-  );
+  // 按优先级排序
+  ipAddresses.sort((a, b) => b.priority - a.priority);
   
-  if (localIP) {
-    console.log(`✅ Choose Local IP: ${localIP.address} (${localIP.name})`);
-    return localIP.address;
-  }
-
-  // 如果没有找到本地网络地址，选择第一个可用的 IP
   if (ipAddresses.length > 0) {
-    console.log(`⚠️ Local network not found, use the first available IP: ${ipAddresses[0].address} (${ipAddresses[0].name})`);
-    return ipAddresses[0].address;
+    const selectedIP = ipAddresses[0];
+    console.log(`✅ Choose Local IP: ${selectedIP.address} (${selectedIP.name})`);
+    return selectedIP.address;
   }
 
   console.log('❌ No available network interface was found, use localhost');
   return 'localhost';
+}
+
+// 计算 IP 地址的优先级分数
+function getPriorityScore(address, interfaceName) {
+  let score = 0;
+  
+  // 优先选择常见的本地网络接口名称
+  if (interfaceName.includes('en0') || interfaceName.includes('wlan0')) {
+    score += 100;
+  }
+  
+  // 优先选择 192.168.x.x 地址（最常见的本地网络）
+  if (address.startsWith('192.168.')) {
+    score += 50;
+  }
+  
+  // 优先选择 172.16.x.x - 172.31.x.x 地址
+  if (address.startsWith('172.')) {
+    const secondOctet = parseInt(address.split('.')[1]);
+    if (secondOctet >= 16 && secondOctet <= 31) {
+      score += 40;
+    }
+  }
+  
+  // 优先选择 10.x.x.x 地址
+  if (address.startsWith('10.')) {
+    score += 30;
+  }
+  
+  // 排除一些特殊的网络接口
+  if (interfaceName.includes('vmnet') || 
+      interfaceName.includes('docker') || 
+      interfaceName.includes('veth')) {
+    score -= 100;
+  }
+  
+  return score;
 }
