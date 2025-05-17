@@ -78,7 +78,7 @@ DeckTap uses `@nut-tree/nut-js` to simulate keyboard events. On macOS, you need 
 
 ---
 
-## 🖱️ Standalone Distribution Quick Start
+## ~🖱️ Standalone Distribution Quick Start~ (Not available yet, an Electron client will be developed in the future)
 
 If you received a **standalone executable version** of DeckTap (such as `decktap-macos`, `decktap-win.exe`, or `decktap-linux`), you can run it directly without installing Node.js or any dependencies.
 
