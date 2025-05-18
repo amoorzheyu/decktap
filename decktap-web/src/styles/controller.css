@@ -98,58 +98,6 @@ h1 {
     background-color: #0056b3;
 }
 
-.timer-container {
-    margin: 1rem 0;
-    padding: 1rem;
-    background-color: white;
-    border-radius: 0.5rem;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.timer-display {
-    font-size: 2em;
-    font-family: monospace;
-    margin-bottom: 1rem;
-    color: #333;
-}
-
-.timer-controls {
-    display: flex;
-    justify-content: center;
-    gap: 0.5rem;
-}
-
-.timer-btn {
-    padding: 0.8rem 1.2rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    background-color: #4CAF50;
-    color: white;
-    transition: background-color 0.3s;
-}
-
-.timer-btn:hover {
-    background-color: #45a049;
-}
-
-#pauseTimer {
-    background-color: #f39c12;
-}
-
-#pauseTimer:hover {
-    background-color: #e67e22;
-}
-
-#resetTimer {
-    background-color: #e74c3c;
-}
-
-#resetTimer:hover {
-    background-color: #c0392b;
-}
-
 .status {
     color: #666;
     font-size: 0.9rem;

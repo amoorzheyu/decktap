@@ -11,19 +11,17 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 const port = 9999;
 
-// 判断是否为 pkg 打包环境
-const isPkg = typeof process.pkg !== 'undefined';
-const staticPath = isPkg
-  ? path.join(path.dirname(process.execPath), 'controller', 'public')
-  : path.join(__dirname, '..', 'controller', 'public');
+const staticPath = path.join(__dirname, '..', 'decktap-web', 'dist');
 
 console.log('📂 Static files path:', staticPath);
 app.use(express.static(staticPath));
 
+// WebSocket 连接处理
 wss.on('connection', (ws) => {
   console.log('📲 Mobile phone controller connected');
   ws.on('message', (message) => {
     const msg = message.toString();
+    console.log('🔍 Received message:', msg);
     if (msg === 'next') {
       try {     
         (async () => {

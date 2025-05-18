@@ -15,22 +15,21 @@
   "main": "client/lan.js",
   "scripts": {
     "start": "node client/lan.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf dist",
-    "copy-assets": "mkdir -p dist/controller/public && cp -r controller/public/* dist/controller/public/",
-    "build": "npm run clean && pkg . && npm run copy-assets",
-    "build:macos": "npm run clean && pkg . --targets node18-macos-x64 --output dist/decktap-macos && npm run copy-assets",
-    "build:win": "npm run clean && pkg . --targets node18-win-x64 --output dist/decktap-win.exe && npm run copy-assets",
-    "build:linux": "npm run clean && pkg . --targets node18-linux-x64 --output dist/decktap-linux && npm run copy-assets"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
+    "@aws-sdk/client-apigatewaymanagementapi": "^3.812.0",
+    "@aws-sdk/client-dynamodb": "^3.812.0",
+    "@aws-sdk/lib-dynamodb": "^3.812.0",
     "@nut-tree/nut-js": "^3.1.2",
     "express": "^5.1.0",
+    "http-proxy-middleware": "^3.0.5",
     "qrcode-terminal": "^0.12.0",
     "ws": "^8.18.1"
   },
   "devDependencies": {
-    "pkg": "^5.8.1"
+    "pkg": "^5.8.1",
+    "serverless-finch": "^4.0.4"
   },
   "pkg": {
     "assets": [
