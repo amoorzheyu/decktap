@@ -56,7 +56,7 @@ DeckTap uses `@nut-tree/nut-js` to simulate keyboard events. On macOS, you need 
 ## 🚀 Getting Started (LAN Mode)
 1. Install dependencies:
    ```bash
-   cd decktap-web && npm install && npm run build
+   cd decktap-web && npm install && vite build
    cd .. && npm install
    ```
 
@@ -75,7 +75,7 @@ DeckTap uses `@nut-tree/nut-js` to simulate keyboard events. On macOS, you need 
    - <img src="./images/computer-client.png" width="600">
    - Start controlling your presentation (Use 👉 to switch left and right hand mode)
    - <img src="./images/phone-controller.png" width="300" >
-  
+
 
 ---
 
